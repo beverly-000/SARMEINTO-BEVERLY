@@ -1,0 +1,64 @@
+<ion-content [fullscreen]="true" class="chats-page">
+  <main class="chats-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">YOUR MESSAGES</p>
+        <h1>Chats</h1>
+      </div>
+      <div class="top-actions">
+        <button class="icon-button" aria-label="Settings"><ion-icon [icon]="settingsIcon"></ion-icon></button>
+        <button class="icon-button filled" aria-label="Add contact" (click)="addContact()"><ion-icon [icon]="createIcon"></ion-icon></button>
+        <button class="request-link" (click)="openRequestModal()">New request</button>
+      </div>
+    </header>
+
+    <section class="greeting-card">
+      <div class="greeting-icon"><ion-icon [icon]="chatIcon"></ion-icon></div>
+      <div><p>Good to see you,</p><strong>{{ userName }}</strong></div>
+      <button class="logout" (click)="logout()"><ion-icon [icon]="logoutIcon"></ion-icon></button>
+    </section>
+
+    <ion-input class="search" [ngModel]="searchTerm" (ngModelChange)="saveSearch($event)" fill="outline" placeholder="Search saved contacts and conversations">
+      <ion-icon slot="start" [icon]="searchIcon"></ion-icon>
+    </ion-input>
+
+    <div class="section-heading"><h2>Recent chats</h2><button>See all</button></div>
+    <section class="request-list" *ngIf="requests.length"><div class="section-heading"><h2>Message requests</h2><span class="request-count">{{ requests.length }}</span></div><article class="request-card" *ngFor="let request of requests"><div class="avatar request-avatar">{{ request.senderName.charAt(0).toUpperCase() }}</div><div class="request-copy"><strong>{{ request.senderName }}</strong><p>{{ request.messageText }}</p><small>{{ request.senderPhone }}</small></div><div class="request-actions"><button class="accept" (click)="acceptRequest(request)">Accept</button><button class="decline" (click)="declineRequest(request)">Decline</button></div></article></section>
+    <section class="chat-list" *ngIf="conversations.length; else emptyChats">
+      <article class="chat-row clickable" *ngFor="let chat of conversations" (click)="openChat(chat)">
+        <div class="avatar chat-avatar"><ion-icon [icon]="chatIcon"></ion-icon></div>
+        <div class="chat-copy"><div class="chat-title"><strong>{{ chat.name }}</strong><span>{{ chat.lastMessageAt | date:'shortTime' }}</span></div><p>{{ chat.lastMessage || 'Start your conversation' }}</p></div>
+      </article>
+    </section>
+    <ng-template #emptyChats><section class="chat-list"><p class="empty-state">No conversations yet. Choose a contact below.</p></section></ng-template>
+
+    <div class="section-heading contacts-heading"><h2>Contacts</h2></div>
+    <section class="chat-list">
+      <article class="chat-row clickable" *ngFor="let user of filteredContacts" (click)="startChat(user)">
+        <div class="avatar contact-avatar">{{ user.displayName.charAt(0).toUpperCase() }}</div>
+        <div class="chat-copy"><div class="chat-title"><strong>{{ user.displayName }}</strong></div><p>{{ user.phone }}</p></div>
+      </article>
+      <p class="empty-state" *ngIf="!users.length">No saved contacts yet. Use the pencil button above to add one.</p>
+    </section>
+    <p class="error-state" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </main>
+<div class="modal-backdrop" *ngIf="showAddModal" (click)="closeAddModal()">
+  <section class="add-modal" role="dialog" aria-modal="true" aria-labelledby="add-contact-title" (click)="$event.stopPropagation()">
+    <div class="modal-icon"><ion-icon [icon]="contactIcon"></ion-icon></div>
+    <h2 id="add-contact-title">Add a contact</h2>
+    <p>Enter the phone number of a WatsUp user to save them to your contacts.</p>
+    <ion-input [(ngModel)]="newContactPhone" type="tel" label="Phone number" label-placement="stacked" placeholder="09xxxxxxxxx" fill="outline" autofocus></ion-input>
+    <div class="modal-actions"><button class="cancel-button" (click)="closeAddModal()">Cancel</button><button class="save-button" (click)="submitAddContact()">Add contact</button></div>
+  </section>
+</div>
+<div class="modal-backdrop" *ngIf="showRequestModal" (click)="closeRequestModal()">
+  <section class="add-modal" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-icon"><ion-icon [icon]="chatIcon"></ion-icon></div>
+    <h2>Send a message request</h2>
+    <p>Magpadala ng unang message sa user. Kailangan niya itong i-accept bago kayo makapag-chat.</p>
+    <ion-input [(ngModel)]="requestPhone" type="tel" label="Phone number" label-placement="stacked" placeholder="09xxxxxxxxx" fill="outline"></ion-input>
+    <ion-input [(ngModel)]="requestText" label="Message" label-placement="stacked" placeholder="Type your message" fill="outline"></ion-input>
+    <div class="modal-actions"><button class="cancel-button" (click)="closeRequestModal()">Cancel</button><button class="save-button" (click)="submitRequest()">Send request</button></div>
+  </section>
+</div>
+</ion-content>

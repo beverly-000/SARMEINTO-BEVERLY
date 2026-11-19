@@ -1,0 +1,66 @@
+:host { display: block; }
+
+.login-page {
+  --background: linear-gradient(160deg, #f5fbfa 0%, #ffffff 55%, #edf8f6 100%);
+}
+
+.login-shell {
+  width: min(100%, 480px);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 64px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.brand-block { text-align: center; margin-bottom: 32px; }
+.brand-mark {
+  width: 68px; height: 68px; margin: 0 auto 16px; border-radius: 22px;
+  display: grid; place-items: center; color: #fff; font-size: 32px;
+  background: linear-gradient(145deg, #16b897, #087f73);
+  box-shadow: 0 14px 28px rgba(8, 127, 115, .22);
+}
+.eyebrow { margin: 0 0 4px; color: #758582; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+h1 { margin: 0; color: #163b38; font-size: 42px; font-weight: 800; letter-spacing: -1.8px; }
+h1 span { color: #10a78e; }
+.tagline { margin: 8px 0 0; color: #6b7f7b; font-size: 14px; }
+
+.login-card {
+  padding: 28px 22px 22px; border: 1px solid rgba(15, 122, 107, .12); border-radius: 24px;
+  background: rgba(255, 255, 255, .92); box-shadow: 0 20px 50px rgba(18, 76, 68, .1);
+}
+.card-heading h2 { margin: 0; color: #183f3b; font-size: 24px; font-weight: 700; }
+.card-heading p { margin: 6px 0 22px; color: #71807e; font-size: 14px; }
+.phone-input {
+  --border-radius: 14px;
+  --highlight-color: #10a78e;
+  --color: #183f3b;
+  --placeholder-color: #82908e;
+  --placeholder-opacity: 1;
+  margin-bottom: 18px;
+}
+.continue-button { --background: #0d9b85; --background-hover: #087f73; --border-radius: 14px; height: 52px; font-weight: 700; text-transform: none; }
+.privacy-note { margin: 18px 0 0; display: flex; gap: 6px; align-items: center; justify-content: center; color: #83918f; font-size: 12px; }
+.status-message { margin: 14px 0 0; text-align: center; color: #087f73; font-size: 13px; }
+.mode-toggle { display: block; margin: 18px auto 0; padding: 0; border: 0; background: transparent; color: #087f73; font-size: 13px; font-weight: 700; cursor: pointer; }
+.privacy-note ion-icon { color: #0d9b85; }
+.footer-note { margin-top: 20px; text-align: center; font-size: 11px; line-height: 1.5; }
+.footer-note p { margin: 0; }
+
+@media (min-width: 600px) { .login-shell { padding-top: 40px; } }
+.api-gate { min-height: 100%; display: grid; place-items: center; padding: 24px; background: #f4fbf9; }.api-card { width: min(100%, 420px); padding: 30px; border: 1px solid #dcece8; border-radius: 24px; background: #fff; box-shadow: 0 18px 50px rgba(13,96,84,.12); text-align: center; }.api-card h2 { color: #183f3b; }.api-card p { color: #70837f; }.api-card ion-input { margin: 22px 0 14px; }
+
+.change-api {
+  position: fixed;
+  top: max(36px, calc(var(--ion-safe-area-top, env(safe-area-inset-top, 0px)) + 8px));
+  right: calc(16px + var(--ion-safe-area-right, env(safe-area-inset-right, 0px)));
+  z-index: 5;
+  min-height: 44px;
+  padding: 0 8px;
+  border: 0;
+  color: #087f73;
+  background: transparent;
+  font-weight: 700;
+}

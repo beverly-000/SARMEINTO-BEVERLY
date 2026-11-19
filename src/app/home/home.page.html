@@ -1,0 +1,65 @@
+<ion-content [fullscreen]="true" class="login-page">
+  <section class="api-gate" *ngIf="!apiReady">
+    <div class="api-card">
+      <div class="brand-mark"><ion-icon [icon]="phoneIcon"></ion-icon></div>
+      <h2>Connect to WatsUp server</h2>
+      <p>Enter the IPv4 address of the PC running XAMPP and the API.</p>
+      <ion-input [(ngModel)]="apiUrl" type="url" label="API URL" label-placement="stacked" placeholder="http://192.168.1.100:3000" fill="outline"></ion-input>
+      <ion-button expand="block" (click)="checkApi()" [disabled]="apiChecking">{{ apiChecking ? 'Checking server...' : 'Connect' }}</ion-button>
+      <p class="status-message" *ngIf="statusMessage">{{ statusMessage }}</p>
+    </div>
+  </section>
+  <button class="change-api" *ngIf="apiReady" (click)="changeApi()">Change API</button>
+  <ng-container *ngIf="apiReady">
+  <main class="login-shell">
+    <section class="brand-block" aria-label="WatsUp welcome">
+      <div class="brand-mark" aria-hidden="true">
+        <ion-icon [icon]="phoneIcon"></ion-icon>
+      </div>
+      <p class="eyebrow">WELCOME TO</p>
+      <h1>Wats<span>Up</span></h1>
+      <p class="tagline">Simple conversations. Meaningful connections.</p>
+    </section>
+
+    <section class="login-card">
+      <div class="card-heading">
+        <h2>{{ isRegistering ? 'Create your account' : 'Welcome back' }}</h2>
+        <p>{{ isRegistering ? 'Join WatsUp and start chatting' : 'Sign in to continue to WatsUp' }}</p>
+      </div>
+
+      <ion-input *ngIf="isRegistering" [(ngModel)]="displayName" label="Display name" label-placement="stacked" placeholder="Your name" fill="outline" class="phone-input"></ion-input>
+      <ion-input
+        [(ngModel)]="phone"
+        class="phone-input"
+        type="tel"
+        label="Phone number"
+        label-placement="stacked"
+        placeholder="e.g. 0917 123 4567"
+        fill="outline"
+        inputmode="tel">
+        <ion-icon slot="start" [icon]="phoneIcon" aria-hidden="true"></ion-icon>
+      </ion-input>
+      <ion-input [(ngModel)]="password" type="password" label="Password" label-placement="stacked" placeholder="At least 6 characters" fill="outline" class="phone-input"></ion-input>
+
+      <ion-button expand="block" class="continue-button" (click)="submit()" [disabled]="isLoading">
+        {{ isLoading ? 'Please wait...' : (isRegistering ? 'Create account' : 'Sign in') }}
+      </ion-button>
+
+      <p class="status-message" *ngIf="statusMessage">{{ statusMessage }}</p>
+
+      <button type="button" class="mode-toggle" (click)="toggleMode()">
+        {{ isRegistering ? 'Already have an account? Sign in' : 'New to WatsUp? Create an account' }}
+      </button>
+
+      <p class="privacy-note">
+        <ion-icon [icon]="lockIcon" aria-hidden="true"></ion-icon>
+        Your conversations are private and secure.
+      </p>
+    </section>
+
+    <ion-text color="medium" class="footer-note">
+      <p>By continuing, you agree to the WatsUp Terms and Privacy Policy.</p>
+    </ion-text>
+  </main>
+  </ng-container>
+</ion-content>

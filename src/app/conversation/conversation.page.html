@@ -1,0 +1,25 @@
+<ion-content [fullscreen]="true" class="conversation-page">
+  <main class="conversation-shell">
+    <header class="chat-header">
+      <button class="header-button" aria-label="Back" (click)="goBack()"><ion-icon [icon]="backIcon"></ion-icon></button>
+      <div class="contact-avatar">{{ contactName.charAt(0).toUpperCase() }}</div>
+      <div class="contact-info"><strong>{{ contactName }}</strong><span>WatsUp contact</span></div>
+      <button class="header-button" aria-label="Call"><ion-icon [icon]="callIcon"></ion-icon></button>
+      <button class="header-button" aria-label="More"><ion-icon [icon]="moreIcon"></ion-icon></button>
+    </header>
+
+    <section class="messages" aria-live="polite">
+      <p class="date-pill">TODAY</p>
+      <p class="date-pill" *ngIf="!messages.length">NO MESSAGES YET</p>
+      <div class="message-row" *ngFor="let message of messages" [class.mine]="message.senderId === currentUserId">
+        <div class="bubble" (dblclick)="editMessage(message)"><p>{{ message.text }}</p><span>{{ message.createdAt | date:'shortTime' }} <ion-icon *ngIf="message.senderId === currentUserId" [icon]="readIcon"></ion-icon></span></div>
+      </div>
+      <p class="chat-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </section>
+
+    <footer class="composer">
+      <ion-input [(ngModel)]="draft" (keyup.enter)="sendMessage()" placeholder="Type a message" fill="outline"></ion-input>
+      <button class="send-button" aria-label="Send message" (click)="sendMessage()"><ion-icon [icon]="sendIcon"></ion-icon></button>
+    </footer>
+  </main>
+</ion-content>
